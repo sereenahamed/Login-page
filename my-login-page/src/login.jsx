@@ -13,11 +13,11 @@ const Login =() =>{
   const [errMsg , setErrMsg] = useState('');
   const [success , setSuccess] = useState(false);
 
-
+  
   useEffect(() => {
     const handleUsernameChange = () => {
       const usernameValue = userRef.current.value.toLowerCase();
-      if (usernameValue.includes('com')) {
+      if (usernameValue.includes('@gmail.com')) {
         passwordRef.current.focus();
       }
     };
