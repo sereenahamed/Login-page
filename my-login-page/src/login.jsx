@@ -5,37 +5,32 @@ import { useEffect, useState, useRef} from 'react';
 const Login =() =>{
 
   
-
   const userRef = useRef();
-  const errRef = useRef();
+  const passwordRef = useRef();
 
   const [user , setUser] = useState('');
   const [pwd , setPwd] = useState('');
   const [errMsg , setErrMsg] = useState('');
   const [success , setSuccess] = useState(false);
 
+  
 
-  useEffect( () => {
-    setErrMsg('');
-    console.log("empty");
-  },[]
-  )
-  useEffect( () => {
-    setErrMsg('');
-    console.log("user");
-  },[user]
-  )
+  useEffect(() => {
+    const handleUsernameChange = () => {
+      const usernameValue = userRef.current.value.toLowerCase();
+      if (usernameValue.includes('@gmail.com')) {
+        passwordRef.current.focus();
+      }
+    };
 
-  useEffect( () => {
-    setErrMsg('');
-    console.log("pwd");
-  },[pwd]
-  )
-  useEffect( () => {
-    setErrMsg('');
-    console.log("pwd+user");
-  },[pwd,user]
-  )
+    userRef.current.addEventListener('input', handleUsernameChange);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      userRef.current.removeEventListener('input', handleUsernameChange);
+    };
+  },[user]);
+
 
 
   return(
@@ -60,6 +55,8 @@ const Login =() =>{
           setUser(e.target.value)
         }
       }
+
+      ref={userRef}
     
        />
     </div>
@@ -79,6 +76,7 @@ const Login =() =>{
         setPwd(e.target.value)
       }
     }
+    ref={passwordRef}
 
     />
 </div>
